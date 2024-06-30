@@ -2,6 +2,7 @@ package com.example.chatgpt1.controller;
 
 import com.example.chatgpt1.dto.GptRequestDto;
 import com.example.chatgpt1.service.GptService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -10,10 +11,12 @@ import java.util.List;
 import java.util.Map;
 
 @RestController
-@RequestMapping(value = "/api/v1/chatGpt")
-public class GptController {
-    private final GptService gptService;
 
+public class GptController {
+    @Autowired
+    private GptService gptService;
+
+    @Autowired
     public GptController(GptService gptService){
         this.gptService = gptService;
     }
@@ -48,8 +51,8 @@ public class GptController {
         return new ResponseEntity<>(result, HttpStatus.OK);
     }
 
-//    @PostMapping("/prompt")
-//    public List<Map<String, Object>> prompt(@RequestBody GptRequestDto requestDto) {
-//        return gptService.prompt(requestDto);
+//    public List<Map<String, Object>> selectPromptLambda(GptRequestDto gptRequestDto) {
+//        return gptService.prompt(gptRequestDto);
 //    }
+
 }

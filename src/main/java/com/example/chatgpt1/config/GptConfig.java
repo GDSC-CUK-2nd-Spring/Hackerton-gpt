@@ -1,13 +1,18 @@
 package com.example.chatgpt1.config;
 
+import com.example.chatgpt1.controller.GptController;
+import com.example.chatgpt1.service.GptService;
+import com.example.chatgpt1.service.Impl.GptServiceImpl;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.web.client.RestTemplate;
 
 @Configuration
+@ComponentScan(basePackages = "com.example.chatgpt1")
 public class GptConfig {
 
     @Value("${openai.secret-key}")
@@ -15,8 +20,11 @@ public class GptConfig {
 
     @Bean
     public RestTemplate restTemplate() {
-        RestTemplate restTemplate = new RestTemplate();
-        return restTemplate;
+        return new RestTemplate();
+    }
+    @Bean
+    public GptService gptService(GptConfig gptConfig) {
+        return new GptServiceImpl(gptConfig);
     }
 
     @Bean
@@ -26,4 +34,5 @@ public class GptConfig {
         headers.setContentType(MediaType.APPLICATION_JSON);
         return headers;
     }
+
 }
